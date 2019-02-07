@@ -1,7 +1,5 @@
 package se.anosh.timestampmicroservice.rest;
 
-import java.text.ParseException;
-import java.time.format.DateTimeParseException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -9,8 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import se.anosh.timestampmicroservice.GarbageInputException;
 import se.anosh.timestampmicroservice.TimeStampService;
-import se.anosh.timestampmicroservice.domain.Invalid;
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
 /**
@@ -20,6 +18,8 @@ import se.anosh.timestampmicroservice.domain.TimeStamp;
 @Stateless
 @Path("/timestamp")
 public class TimeResource {
+    
+    private final String jsonError = "{\"error\" : \"Invalid Date\" }";
     
     @Inject
     TimeStampService service;
@@ -51,17 +51,14 @@ public class TimeResource {
             return getCustomTime(userInput);
         }
     }
-    
-  
-    
 
     private Response getCustomTime(String date) {
         
         try {
          TimeStamp result = service.getTime(date);
          return Response.ok(result).build();
-        } catch (DateTimeParseException ex) {
-            return Response.ok(new Invalid()).build();
+        } catch (GarbageInputException ex) {
+            return Response.ok(jsonError).build();
         }
     }
     

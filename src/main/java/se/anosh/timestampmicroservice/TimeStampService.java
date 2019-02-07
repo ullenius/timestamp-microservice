@@ -1,8 +1,5 @@
 package se.anosh.timestampmicroservice;
 
-import java.text.ParseException;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
 /**
@@ -13,6 +10,6 @@ public interface TimeStampService {
     
     public TimeStamp getCurrent();
     public TimeStamp getTime(long unixTime);
-    public TimeStamp getTime(String date) throws DateTimeParseException;
+    public TimeStamp getTime(String date) throws GarbageInputException;
     
 }

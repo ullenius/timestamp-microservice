@@ -1,6 +1,7 @@
 package se.anosh.timestampmicroservice;
 
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -41,13 +42,18 @@ public class TimeStampImplementation implements TimeStampService {
      * and the time to 00:00. Then converts it to Unix time in ms
      * using the Date-class' from-method
      */
-    public TimeStamp getTime(String target) throws DateTimeParseException {
+    public TimeStamp getTime(String target) throws GarbageInputException {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
         final LocalDate other = LocalDate.parse(target,formatter);
         long unix = Date.from(other.atStartOfDay(ZoneId.of("UTC")).toInstant()).getTime();
         String utc = unixTimeToUTC(unix);
         return new TimeStamp(unix,utc);
+        } catch (DateTimeParseException ex) {
+            throw new GarbageInputException("date parsing failed");
+        }
+        
     }
      /**
      * Returns UTC time formatted with US locale
