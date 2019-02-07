@@ -6,23 +6,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
 /**
  *
  * @author Anosh D. Ullenius <anosh@anosh.se>
  */
+@Default
+@Stateless
 public class TimeStampImplementation implements TimeStampService {
 
-    /**
-     * Returns UTC time formatted with US locale
-     * OMFG
-     * 
-     */
-
+   
     @Override
     public TimeStamp getCurrent() {
-        
         return factory();
     }
 
@@ -42,10 +40,13 @@ public class TimeStampImplementation implements TimeStampService {
         String utc = unixTimeToUTC(unix);
         
         return new TimeStamp(unix,utc);
-        
     }
-    
-    
+     /**
+     * Returns UTC time formatted with US locale
+     * 
+     * Example: "Sun, 20 Nov 2016 17:31:29 GMT"
+     * 
+     */
     private String unixTimeToUTC(long unixTimeInMilliseconds) {
         
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, Locale.US);
