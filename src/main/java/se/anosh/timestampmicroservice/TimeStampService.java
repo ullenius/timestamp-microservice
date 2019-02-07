@@ -1,5 +1,7 @@
+package se.anosh.timestampmicroservice;
 
 import java.util.Date;
+import se.anosh.timestampmicroservice.domain.TimeStamp;
 
 /**
  *
@@ -7,8 +9,8 @@ import java.util.Date;
  */
 public interface TimeStampService {
     
-    public String getTime();
-    public String parseDate(long unixTime); // 32bit signed
-    public long getUnixTime(Date date);
+    public TimeStamp getCurrent();
+    public TimeStamp getTime(long unixTime);
+    public TimeStamp getTime(String date);
     
 }
