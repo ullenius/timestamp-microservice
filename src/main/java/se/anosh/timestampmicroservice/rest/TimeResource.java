@@ -23,31 +23,33 @@ public class TimeResource {
     @Inject
     TimeStampService service;
     
-    @GET
-    @Produces({"application/JSON"})
-    public Response getCurrentTime() {
-        
-        TimeStamp current = service.getCurrent();
-        return Response.ok(current).build();
-    }
+   
     
     @GET
     @Path("{userInput}")
     @Produces({"application/JSON"})
     public Response getFromUser(@PathParam("userInput") String userInput) {
         
-        // kolla parametertyp
+        if (userInput == null)
+            return getCurrentTime();
         
-        return getCurrent();
+        try {
+            Long unixTime = Long.parseLong(userInput);
+            return TimeResource.this.getCustomTime(unixTime);
+            
+        } catch (NumberFormatException ex) {
+            return getCustomTime(userInput);
+        }
     }
     
-    private Response getCurrent() {
+     private Response getCurrentTime() {
         
-        TimeStamp result = service.getCurrent();
-        return Response.ok(result).build();
+        TimeStamp current = service.getCurrent();
+        return Response.ok(current).build();
     }
+    
 
-    private Response getDateFromUser(String date) {
+    private Response getCustomTime(String date) {
         
         try {
          TimeStamp result = service.getTime(date);
@@ -57,7 +59,7 @@ public class TimeResource {
         }
     }
     
-    private Response getUnixTimeFromUser(long unixTimeInMilliseconds) {
+    private Response getCustomTime(long unixTimeInMilliseconds) {
         
         TimeStamp result = service.getTime(unixTimeInMilliseconds);
         return Response.ok(result).build();

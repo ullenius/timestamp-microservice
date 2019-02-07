@@ -49,11 +49,13 @@ public class TimeStampImplementation implements TimeStampService {
      */
     private String unixTimeToUTC(long unixTimeInMilliseconds) {
         
-        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, Locale.US);
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String pattern = "E dd MMM yyyy HH:mm:ss z";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         
         Date date = new Date(unixTimeInMilliseconds);
-        String dateString = formatter.format(date);
+        String dateString = sdf.format(date);
+
         return dateString;
     }
     
