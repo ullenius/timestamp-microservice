@@ -1,8 +1,10 @@
 package se.anosh.timestampmicroservice;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -32,13 +34,19 @@ public class TimeStampImplementation implements TimeStampService {
     }
 
     @Override
-    public TimeStamp getTime(String target) throws ParseException {
+    /**
+     * This method is a mess. But it works
+     * 
+     * Parses the date to localdate, sets the timezone to utc
+     * and the time to 00:00. Then converts it to Unix time in ms
+     * using the Date-class' from-method
+     */
+    public TimeStamp getTime(String target) throws DateTimeParseException {
         
-        DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
-        Date result = df.parse(target);
-        long unix = result.getTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        final LocalDate other = LocalDate.parse(target,formatter);
+        long unix = Date.from(other.atStartOfDay(ZoneId.of("UTC")).toInstant()).getTime();
         String utc = unixTimeToUTC(unix);
-        
         return new TimeStamp(unix,utc);
     }
      /**

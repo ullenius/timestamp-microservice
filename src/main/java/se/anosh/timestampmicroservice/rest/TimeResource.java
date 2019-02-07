@@ -1,6 +1,7 @@
 package se.anosh.timestampmicroservice.rest;
 
 import java.text.ParseException;
+import java.time.format.DateTimeParseException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -59,7 +60,7 @@ public class TimeResource {
         try {
          TimeStamp result = service.getTime(date);
          return Response.ok(result).build();
-        } catch (ParseException ex) {
+        } catch (DateTimeParseException ex) {
             return Response.ok(new Invalid()).build();
         }
     }
