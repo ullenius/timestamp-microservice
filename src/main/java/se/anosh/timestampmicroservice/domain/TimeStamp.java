@@ -25,16 +25,8 @@ public class TimeStamp {
         return unix;
     }
 
-    public void setUnix(long unix) {
-        this.unix = unix;
-    }
-
     public String getUtc() {
         return utc;
-    }
-
-    public void setUtc(String utc) {
-        this.utc = utc;
     }
     
 }

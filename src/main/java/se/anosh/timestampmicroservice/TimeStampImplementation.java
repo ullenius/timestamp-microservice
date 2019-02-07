@@ -1,11 +1,11 @@
 package se.anosh.timestampmicroservice;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import javax.inject.Inject;
-import se.anosh.timestampmicroservice.dataaccess.DataAccess;
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
 /**
@@ -19,11 +19,34 @@ public class TimeStampImplementation implements TimeStampService {
      * OMFG
      * 
      */
+
+    @Override
+    public TimeStamp getCurrent() {
+        
+        return factory();
+    }
+
+    @Override
+    public TimeStamp getTime(long unixTime) {
+        
+        String utc = unixTimeToUTC(unixTime);
+        return new TimeStamp(unixTime,utc);
+    }
+
+    @Override
+    public TimeStamp getTime(String target) throws ParseException {
+        
+        DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
+        Date result = df.parse(target);
+        long unix = result.getTime();
+        String utc = unixTimeToUTC(unix);
+        
+        return new TimeStamp(unix,utc);
+        
+    }
     
-    @Inject
-    private DataAccess da;
     
-    public String unixTimeToString(long unixTimeInMilliseconds) {
+    private String unixTimeToUTC(long unixTimeInMilliseconds) {
         
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, Locale.US);
         formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -32,34 +55,17 @@ public class TimeStampImplementation implements TimeStampService {
         String dateString = formatter.format(date);
         return dateString;
     }
-
-    @Override
-    public String parseDate(Date date) {
-
-        return unixTimeToString(date.getTime());
-    }
-
-    @Override
-    public long getUnixTime(Date date) {
-        
-        return date.getTime();
-    }
-    
-    
     
     /**
      * Creates a Timestamp object using the current time
-     * @return 
+     * @return
      */
-    private TimeStamp factory() { 
+    private TimeStamp factory() {
         
-        TimeStamp current = new TimeStamp();
         Date now = new Date();
-        
-        current.setUnix(now.getTime());
-        current.setUtc(service.parseDate(now));
-
-        return current;
+        long unix = now.getTime();
+        String utc = unixTimeToUTC(unix);
+        return new TimeStamp(unix,utc);
     }
 
     
