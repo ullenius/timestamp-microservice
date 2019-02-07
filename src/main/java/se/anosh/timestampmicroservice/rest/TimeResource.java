@@ -23,10 +23,19 @@ public class TimeResource {
     @Inject
     TimeStampService service;
     
-   
+    @GET
+    @Produces({"application/JSON"})
+    /**
+     * 
+     * When no path parameter is given
+     */
+    public Response getCurrentTime() {
+        TimeStamp current = service.getCurrent();
+        return Response.ok(current).build();
+    }
     
     @GET
-    @Path("{userInput}")
+    @Path("/{userInput}")
     @Produces({"application/JSON"})
     public Response getFromUser(@PathParam("userInput") String userInput) {
         
@@ -42,11 +51,7 @@ public class TimeResource {
         }
     }
     
-     private Response getCurrentTime() {
-        
-        TimeStamp current = service.getCurrent();
-        return Response.ok(current).build();
-    }
+  
     
 
     private Response getCustomTime(String date) {
