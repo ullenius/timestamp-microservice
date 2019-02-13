@@ -1,7 +1,6 @@
 package se.anosh.timestampmicroservice;
 
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
