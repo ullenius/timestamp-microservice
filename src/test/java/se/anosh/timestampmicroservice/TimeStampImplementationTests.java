@@ -35,28 +35,21 @@ class TimeStampImplementationTests {
 		assertFalse(d.getTime() == service.getCurrent().getUnix());
 	}
 	
+	
 	@Test
-	public void testInvalidUnixTimeInput() {
+	public void testInvalidStringInput() {
 		
-		
-		fail();
-//		Executable closureContainingCodeToTest = () ->
-//			service.getTime(-15);
-//		
-//			assertThrows(GarbageInputException.class,closureContainingCodeToTest, "Expected to throw exception, but it did not");
-		
+		Executable closureContainingCodeToTest = () -> service.getTime("19930510"); // lambda expression
+		assertThrows(GarbageInputException.class,closureContainingCodeToTest, "Expected to throw exception, but it did not");
 	}
 	
-//	@Test
-//	void exceptionTesting() {
-//	    Executable closureContainingCodeToTest =
-//	      // This represents production code that is expected to throw
-//	      () -> throw new IllegalArgumentException("a message");
-//
-//	    assertThrows(IllegalArgumentException.class,
-//	      closureContainingCodeToTest,
-//	      "We expect the code under test to throw, but it didn't");
-//	}
+	@Test
+	public void testCorrectConversionFromDateString() {
+		
+		fail();
+		
+	}
+
 	
 	
 
