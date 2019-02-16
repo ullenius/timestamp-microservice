@@ -1,5 +1,7 @@
 package se.anosh.timestampmicroservice.rest;
 
+import java.util.Objects;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -7,6 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import se.anosh.timestampmicroservice.GarbageInputException;
 import se.anosh.timestampmicroservice.TimeStampService;
 import se.anosh.timestampmicroservice.domain.TimeStamp;
@@ -67,6 +72,31 @@ public class TimeResource {
         TimeStamp result = service.getTime(unixTimeInMilliseconds);
         return Response.ok(result).build();
     }
+    
+    /**
+     * This class' sole purpose is to contain
+     * an error String. Then the whole object
+     * is converted into XML or JSON by JAX-RS.
+     * 
+     * Rather than having to hard-code JSON
+     * or XML.
+     * 
+     * This class is immutable by using dependency injection.
+     */
+    @XmlRootElement
+    private class ErrorMessage {
+        
+        @XmlElement(name = "error")
+        final private String message;
+        public ErrorMessage(String message) {
+            this.message = Objects.requireNonNull(message);
+        }
+        @Override
+        public String toString() {
+            return "message: " + message;
+        }
+    }
+    
     
     
 }
