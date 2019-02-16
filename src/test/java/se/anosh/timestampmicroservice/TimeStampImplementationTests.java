@@ -10,6 +10,15 @@ import org.junit.jupiter.api.function.Executable;
 
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
+
+/**
+ * 
+ * Tests for the business logic in TimeStampImplementation.java
+ * 
+ * 
+ * @author Anosh D. Ullenius <anosh@anosh.se>
+ *
+ */
 class TimeStampImplementationTests {
 
 	TimeStampImplementation service;
@@ -48,6 +57,20 @@ class TimeStampImplementationTests {
 		try {
 			TimeStamp stamp = service.getTime("2015-12-25");
 			assertTrue(stamp.getUnix() == expectedResult);
+			
+		} catch (GarbageInputException e) {
+			fail(); // this should never happen anyway...
+		}
+		
+	}
+	
+	@Test
+	public void testInvalidConversionFromDateString() {
+		
+		final long falseResult = 1451001600001L; // changed last digit to 1
+		try {
+			TimeStamp stamp = service.getTime("2015-12-25");
+			assertFalse(stamp.getUnix() == falseResult);
 			
 		} catch (GarbageInputException e) {
 			fail(); // this should never happen anyway...
