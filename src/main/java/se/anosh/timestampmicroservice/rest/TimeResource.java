@@ -24,7 +24,7 @@ import se.anosh.timestampmicroservice.domain.TimeStamp;
 @Path("/timestamp")
 public class TimeResource {
     
-    private static final int BAD_REQUEST = 400;
+    private static final int BAD_REQUEST = 400; //http status-code
     
     @Inject
     TimeStampService service;
