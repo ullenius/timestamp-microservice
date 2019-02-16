@@ -6,9 +6,12 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import se.anosh.timestampmicroservice.rest.TimeResource;
-
+import org.mockito.Spy;
 import static org.mockito.Mockito.*;
+
+import java.math.BigDecimal;
+
+import se.anosh.timestampmicroservice.rest.TimeResource;
 
 /**
  * 
@@ -22,13 +25,20 @@ import static org.mockito.Mockito.*;
 
 class TimeResourceTests {
 
+	@Spy
+	TimeResource resource;
 	
 	@Test
 	void testCurrentTimeResponseStatusCode() {
 		
-		TimeResource resource = Mockito.spy(new TimeResource());
-		Response response = resource.getCurrentTime();
-		assertTrue(response.getStatus() == 200);
+		fail();
+//		resource = spy(new TimeResource());
+//		
+//		doReturn(new BigDecimal(10)).when(loanApplication).getInterestRate();
+//		
+//		
+//		Response response = resource.getCurrentTime();
+//		assertTrue(response.getStatus() == 200);
 		
 	}
 
