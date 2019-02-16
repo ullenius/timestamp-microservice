@@ -25,6 +25,10 @@ import se.anosh.timestampmicroservice.domain.TimeStamp;
 public class TimeResource {
     
     private final String jsonError = "{\"error\" : \"Invalid Date\" }";
+    private static final int BAD_REQUEST = 400;
+    private 
+    
+    
     
     @Inject
     TimeStampService service;
@@ -40,6 +44,16 @@ public class TimeResource {
         return Response.ok(current).build();
     }
     
+    
+    /**
+     * 
+     * This method first checks whether or not it has received a Long (unix-time) or
+     * a String. First it tries to parse it as a long. If that fails it is presumed
+     * to be a date in String-format.
+     * 
+     * @param userInput
+     * @return
+     */
     @GET
     @Path("/{userInput}")
     @Produces({"application/JSON"})
