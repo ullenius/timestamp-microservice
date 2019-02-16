@@ -17,13 +17,11 @@ class TimeStampImplementationTests {
 	@BeforeEach
 	public void setup() {
 		service = new TimeStampImplementation();
-		
 	}
 	
 	
 	@Test
 	public void testValidCurrentUnixTime() {
-		
 		assertTrue( (new Date().getTime() == service.getCurrent().getUnix()));
 	}
 	
@@ -44,9 +42,16 @@ class TimeStampImplementationTests {
 	}
 	
 	@Test
-	public void testCorrectConversionFromDateString() {
+	public void testValidConversionFromDateString() {
 		
-		fail();
+		final long expectedResult = 1451001600000L;
+		try {
+			TimeStamp stamp = service.getTime("2015-12-25");
+			assertTrue(stamp.getUnix() == expectedResult);
+			
+		} catch (GarbageInputException e) {
+			fail(); // this should never happen anyway...
+		}
 		
 	}
 
