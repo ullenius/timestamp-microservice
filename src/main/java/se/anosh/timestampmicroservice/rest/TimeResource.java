@@ -24,11 +24,7 @@ import se.anosh.timestampmicroservice.domain.TimeStamp;
 @Path("/timestamp")
 public class TimeResource {
     
-    private final String jsonError = "{\"error\" : \"Invalid Date\" }";
     private static final int BAD_REQUEST = 400;
-    private 
-    
-    
     
     @Inject
     TimeStampService service;
@@ -44,12 +40,11 @@ public class TimeResource {
         return Response.ok(current).build();
     }
     
-    
     /**
      * 
      * This method first checks whether or not it has received a Long (unix-time) or
-     * a String. First it tries to parse it as a long. If that fails it is presumed
-     * to be a date in String-format.
+     * a String. First it tries to parse it as a long. If that fails the input parameter
+     * is presumed to be a date in String-format.
      * 
      * @param userInput
      * @return
@@ -77,7 +72,7 @@ public class TimeResource {
          TimeStamp result = service.getTime(date);
          return Response.ok(result).build();
         } catch (GarbageInputException ex) {
-            return Response.ok(jsonError).build();
+            return Response.status(BAD_REQUEST).entity(new ErrorMessage("Invalid Date")).build();
         }
     }
     
@@ -95,7 +90,7 @@ public class TimeResource {
      * Rather than having to hard-code JSON
      * or XML.
      * 
-     * This class is immutable by using dependency injection.
+     * This class is immutable (dependency injection)
      */
     @XmlRootElement
     private class ErrorMessage {
