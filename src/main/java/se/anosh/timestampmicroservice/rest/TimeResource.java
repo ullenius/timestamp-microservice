@@ -59,7 +59,7 @@ public class TimeResource {
         
         try {
             Long unixTime = Long.parseLong(userInput);
-            return TimeResource.this.getCustomTime(unixTime);
+            return getCustomTime(unixTime);
             
         } catch (NumberFormatException ex) {
             return getCustomTime(userInput);
