@@ -105,17 +105,6 @@ public class TimeResource {
             return "message: " + message;
         }
     }
-
-    
-    /**
-     * Set method used for testing only
-     * 
-     * @param service
-     */
-	void setService(TimeStampService service) {
-		this.service = service;
-	}
-    
         
 }
     
