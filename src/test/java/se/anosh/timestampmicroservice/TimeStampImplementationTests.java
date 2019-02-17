@@ -1,12 +1,13 @@
 package se.anosh.timestampmicroservice;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.Before;
+import org.junit.Test;
 
 import se.anosh.timestampmicroservice.domain.TimeStamp;
 
@@ -19,11 +20,15 @@ import se.anosh.timestampmicroservice.domain.TimeStamp;
  * @author Anosh D. Ullenius <anosh@anosh.se>
  *
  */
-class TimeStampImplementationTests {
+public class TimeStampImplementationTests {
+	
+	public TimeStampImplementationTests() {
+		// default zero-argument constructor
+	}
 
 	TimeStampImplementation service;
 	
-	@BeforeEach
+	@Before
 	public void setup() {
 		service = new TimeStampImplementation();
 	}
@@ -43,11 +48,10 @@ class TimeStampImplementationTests {
 	}
 	
 	
-	@Test
-	public void testInvalidStringInput() {
+	@Test(expected = GarbageInputException.class)
+	public void testInvalidStringInput() throws GarbageInputException {
 		
-		Executable closureContainingCodeToTest = () -> service.getTime("19930510"); // lambda expression
-		assertThrows(GarbageInputException.class,closureContainingCodeToTest, "Expected to throw exception, but it did not");
+		service.getTime("19930510"); // lambda expression
 	}
 	
 	@Test
