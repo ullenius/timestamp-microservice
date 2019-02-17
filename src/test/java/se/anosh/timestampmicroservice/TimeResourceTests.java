@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javax.ws.rs.core.Response;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Spy;
@@ -25,20 +26,28 @@ import se.anosh.timestampmicroservice.rest.TimeResource;
 
 class TimeResourceTests {
 
-	@Spy
-	TimeResource resource;
+	TimeResource testTimeResource;
+	
+	@BeforeEach
+	public void setup() {
+		testTimeResource = new TimeResource();
+	}
+	
+	
 	
 	@Test
 	void testCurrentTimeResponseStatusCode() {
 		
 		fail();
-//		resource = spy(new TimeResource());
-//		
-//		doReturn(new BigDecimal(10)).when(loanApplication).getInterestRate();
-//		
-//		
-//		Response response = resource.getCurrentTime();
-//		assertTrue(response.getStatus() == 200);
+		
+		/**
+		 * 1. Create a mock TimeStampService
+		 * 2. Inject it into testTimeResource
+		 * 3. Call the method getCurrenTTime() in testTimeResource
+		 * 4. assert status code (int) extracted from return value with expected result
+		 * 
+		 */
+		
 		
 	}
 
