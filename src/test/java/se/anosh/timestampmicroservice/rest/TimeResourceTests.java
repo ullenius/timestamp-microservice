@@ -12,6 +12,7 @@ import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 
+import se.anosh.timestampmicroservice.TimeStampService;
 import se.anosh.timestampmicroservice.rest.TimeResource;
 
 /**
@@ -33,22 +34,12 @@ class TimeResourceTests {
 		testTimeResource = new TimeResource();
 	}
 	
-	
-	
 	@Test
-	void testCurrentTimeResponseStatusCode() {
+	public void getGetFromUserOKStatusCode() {
+		
 		
 		fail();
-		
-		/**
-		 * 1. Create a mock TimeStampService
-		 * 2. Inject it into testTimeResource
-		 * 3. Call the method getCurrenTTime() in testTimeResource
-		 * 4. assert status code (int) extracted from return value with expected result
-		 * 
-		 */
-		
-		
 	}
+	
 
 }
