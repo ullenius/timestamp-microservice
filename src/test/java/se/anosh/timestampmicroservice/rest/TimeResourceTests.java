@@ -1,4 +1,4 @@
-package se.anosh.timestampmicroservice;
+package se.anosh.timestampmicroservice.rest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
