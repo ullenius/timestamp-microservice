@@ -105,9 +105,7 @@ public class TimeResource {
             return "message: " + message;
         }
     }
-    
-    
-    
+        
 }
     
     

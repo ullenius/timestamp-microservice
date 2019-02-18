@@ -28,5 +28,11 @@ public class TimeStamp {
     public String getUtc() {
         return utc;
     }
+
+	@Override
+	public String toString() {
+		return "TimeStamp [unix=" + unix + ", utc=" + utc + "]";
+	}
+    
     
 }
